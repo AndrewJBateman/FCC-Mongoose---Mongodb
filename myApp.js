@@ -108,14 +108,16 @@ var createAndSavePerson = function(done) {
 // 'arrayOfPeople'.
 
 var createManyPeople = function(arrayOfPeople, done) {
-  [
+  
+    Model.create(
+    [
     {name: "Andrew",
     age: 23,
     favoriteFoods: ["beans", "meat"]},
     {name: "Bill",
     age: 27,
     favoriteFoods: ["pasta", "cake"]},
-  ],
+    ]),
     done(null, data);
     
 };
