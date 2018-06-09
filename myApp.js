@@ -39,11 +39,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema; 
 mongoose.connect(process.env.MONGO_URI);
-var Person = new Schema({
+var personSchema = new Schema({
   name : {type: String, required: true, default: "John Woo" },
-  age :  {type: Number, default: 20},
-  favoriteFoods : [{type: String, default: "chips"}]
+  age :  {type: Number, required: true, default: 20},
+  favoriteFoods : [{type: String, required: true, default: "chips"}]
 })
+
+let Person = mongoose.model('Person', personSchema)
 
 // **Note**: GoMix is a real server, and in real servers interactions with
 // the db are placed in handler functions, to be called when some event happens
