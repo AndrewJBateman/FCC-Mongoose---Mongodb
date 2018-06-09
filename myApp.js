@@ -109,7 +109,8 @@ var createAndSavePerson = function(done) {
 
 var createManyPeople = function(arrayOfPeople, done) {
   
-    var arrayOfPeople = [
+    Person.create(
+    [
     {name: "Andrew",
     age: 23,
     favoriteFoods: ["beans", "meat"]},
@@ -117,7 +118,7 @@ var createManyPeople = function(arrayOfPeople, done) {
     age: 27,
     favoriteFoods: ["pasta", "cake"]}
     ]
-      
+    ) 
       
     Person.save((err, data) => {
     if (err) throw err;
