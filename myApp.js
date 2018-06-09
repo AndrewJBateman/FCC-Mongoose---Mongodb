@@ -116,9 +116,15 @@ var createManyPeople = function(arrayOfPeople, done) {
     favoriteFoods: ["beans", "meat"]},
     {name: "Bill",
     age: 27,
-    favoriteFoods: ["pasta", "cake"]},
-    ]),
+    favoriteFoods: ["pasta", "cake"]}
+    ])
+      
+      
+    Person.save((err, data) => {
+    if (err) throw err;
+    console.log(data);
     done(null, data);
+    })
     
 };
 
