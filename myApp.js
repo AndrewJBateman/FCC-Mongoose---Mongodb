@@ -108,22 +108,9 @@ var createAndSavePerson = function(done) {
 // 'arrayOfPeople'.
 
 var createManyPeople = function(arrayOfPeople, done) {
-  
-    Person.create(
-    [
-    {name: "Andrew",
-    age: 23,
-    favoriteFoods: ["beans", "meat"]},
-    {name: "Bill",
-    age: 27,
-    favoriteFoods: ["pasta", "cake"]}
-    ]
-    ) 
-      
-    Person.save((err, data) => {
-    if (err) throw err;
-    console.log(data);
-    done(null, data);
+    Person.create(arrayOfPeople, (err, people) => {
+      if (err) return done(err)
+      done(null, people)
     })
     
 };
