@@ -92,11 +92,10 @@ var createAndSavePerson = function(done) {
   
   person.save((err, data) => {
     if (err) throw err;
-    console.log(data)
+    console.log(data);
+    done(null, data);
   })
   
-  done(null /*, data*/);
-
 };
 
 /** 4) Create many People with `Model.create()` */
@@ -109,8 +108,15 @@ var createAndSavePerson = function(done) {
 // 'arrayOfPeople'.
 
 var createManyPeople = function(arrayOfPeople, done) {
-    
-    done(null/*, data*/);
+  [
+    {name: "Andrew",
+    age: 23,
+    favoriteFoods: ["beans", "meat"]},
+    {name: "Bill",
+    age: 27,
+    favoriteFoods: ["pasta", "cake"]},
+  ],
+    done(null, data);
     
 };
 
