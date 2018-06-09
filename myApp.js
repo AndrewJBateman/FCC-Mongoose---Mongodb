@@ -109,15 +109,14 @@ var createAndSavePerson = function(done) {
 
 var createManyPeople = function(arrayOfPeople, done) {
   
-    Person.create(
-    [
+    var arrayOfPeople = [
     {name: "Andrew",
     age: 23,
     favoriteFoods: ["beans", "meat"]},
     {name: "Bill",
     age: 27,
     favoriteFoods: ["pasta", "cake"]}
-    ])
+    ]
       
       
     Person.save((err, data) => {
