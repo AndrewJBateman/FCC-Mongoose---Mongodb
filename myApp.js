@@ -12,7 +12,6 @@
 // `mongoose`. Store your **mLab** database URI in the private `.env` file 
 // as `MONGO_URI`. Connect to the database using `mongoose.connect(<Your URI>)`
 
-
 /** # SCHEMAS and MODELS #
 /*  ====================== */
 
@@ -37,7 +36,8 @@
 // `default` values. See the [mongoose docs](http://mongoosejs.com/docs/guide.html).
 
 // <Your code here >
-
+var mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URI);
 var Person /* = <Your Model> */
 
 // **Note**: GoMix is a real server, and in real servers interactions with
