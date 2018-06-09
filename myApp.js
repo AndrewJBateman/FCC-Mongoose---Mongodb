@@ -109,7 +109,7 @@ var createAndSavePerson = function(done) {
 
 var createManyPeople = function(arrayOfPeople, done) {
   
-    Model.create(
+    Person.create(
     [
     {name: "Andrew",
     age: 23,
