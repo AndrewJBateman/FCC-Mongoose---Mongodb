@@ -1,15 +1,15 @@
 /**********************************************
-* 3. FCC Mongo & Mongoose Challenges
-* ==================================
-***********************************************/
+ * 3. FCC Mongo & Mongoose Challenges
+ * ==================================
+ ***********************************************/
 
 /** # MONGOOSE SETUP #
 /*  ================== */
 
 /** 1) Install & Set up mongoose */
 
-// Add `mongodb` and `mongoose` to the project's `package.json`. Then require 
-// `mongoose`. Store your **mLab** database URI in the private `.env` file 
+// Add `mongodb` and `mongoose` to the project's `package.json`. Then require
+// `mongoose`. Store your **mLab** database URI in the private `.env` file
 // as `MONGO_URI`. Connect to the database using `mongoose.connect(<Your URI>)`
 
 /** # SCHEMAS and MODELS #
@@ -37,43 +37,49 @@
 
 // <Your code here >
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema; 
-mongoose.connect(process.env.MONGO_URI);
+var Schema = mongoose.Schema;
+// mongoose.connect(process.env.MONGO_URI);
+
+// MongoDB Atlas Database Access Credentials
+const dbUserName = process.env.USER_NAME;
+const dbUserPass = process.env.USER_PASSWORD;
+const dbName = process.env.DB_NAME;
+const dbCluster = process.env.DB_CLUSTER;
+const dbUrl = `mongodb+srv://${dbUserName}:${dbUserPass}@${dbCluster}/${dbName}?retryWrites=true&w=majority`;
+
+//connect to database
+mongoose.connect(
+	dbUrl,
+	{ useNewUrlParser: true, useUnifiedTopology: true },
+	(err, db) => {
+		if (err) {
+			console.log('mongodb connection error ', err);
+			process.exit(1);
+		} else {
+			console.log(
+				'Successful database connection to Mongoose Atlas database named: ',
+				dbName
+			);
+		}
+	}
+);
+
 var personSchema = new Schema({
-  name : {type: String, required: true, default: "John Woo" },
-  age :  {type: Number, required: true, default: 20},
-  favoriteFoods : [{type: String, required: true, default: "chips"}]
-})
+	name: { type: String, required: true, default: 'John Woo' },
+	age: { type: Number, required: true, default: 20 },
+	favoriteFoods: [{ type: String, required: true, default: 'chips' }],
+});
 
-let Person = mongoose.model('Person', personSchema)
-
-// **Note**: GoMix is a real server, and in real servers interactions with
-// the db are placed in handler functions, to be called when some event happens
-// (e.g. someone hits an endpoint on your API). We'll follow the same approach
-// in these exercises. The `done()` function is a callback that tells us that
-// we can proceed after completing an asynchronous operation such as inserting,
-// searching, updating or deleting. It's following the Node convention and
-// should be called as `done(null, data)` on success, or `done(err)` on error.
-// **Warning** - When interacting with remote services, **errors may occur** !
-
-// - Example -
-// var someFunc = function(done) {
-//   ... do something (risky) ...
-//   if(error) return done(error);
-//   done(null, result);
-// };
-
-/** # [C]RUD part I - CREATE #
-/*  ========================== */
+let Person = mongoose.model('Person', personSchema);
 
 /** 3) Create and Save a Person */
 
-// Create a `document` instance using the `Person` constructor you build before.
+// Create a `document` instance using the `Person` constructor you built before.
 // Pass to the constructor an object having the fields `name`, `age`,
 // and `favoriteFoods`. Their types must be conformant to the ones in
 // the Person `Schema`. Then call the method `document.save()` on the returned
 // document instance, passing to it a callback using the Node convention.
-// This is a common pattern, all the **CRUD** methods take a callback 
+// This is a common pattern, all the **CRUD** methods take a callback
 // function like this as the last argument.
 
 // - Example -
@@ -82,20 +88,18 @@ let Person = mongoose.model('Person', personSchema)
 //    ...do your stuff here...
 // });
 
-var createAndSavePerson = function(done) {
-  
-  let person = new Person({
-    name: "Andrew",
-    age: 23,
-    favoriteFoods: ["beans", "meat"]
-  })
-  
-  person.save((err, data) => {
-    if (err) throw err;
-    console.log(data);
-    done(null, data);
-  })
-  
+var createAndSavePerson = function (done) {
+	let person = new Person({
+		name: 'Andrew',
+		age: 23,
+		favoriteFoods: ['beans', 'meat'],
+	});
+
+	person.save((err, data) => {
+		if (err) throw err;
+		console.log(data);
+		done(null, data);
+	});
 };
 
 /** 4) Create many People with `Model.create()` */
@@ -107,11 +111,11 @@ var createAndSavePerson = function(done) {
 // Create many people using `Model.create()`, using the function argument
 // 'arrayOfPeople'.
 
-var createManyPeople = function(arrayOfPeople, done) {
-    Person.create(arrayOfPeople, (err, people) => {
-      if (err) return done(err)
-      done(null, people)
-    }); 
+var createManyPeople = function (arrayOfPeople, done) {
+	Person.create(arrayOfPeople, (err, people) => {
+		if (err) return done(err);
+		done(null, people);
+	});
 };
 
 /** # C[R]UD part II - READ #
@@ -125,11 +129,11 @@ var createManyPeople = function(arrayOfPeople, done) {
 // It supports an extremely wide range of search options. Check it in the docs.
 // Use the function argument `personName` as search key.
 
-var findPeopleByName = function(personName, done) {
-  Person.find({ name: personName }, (err, data) => {
-    if(err) return done(err)
-    done(null, data);
-  });
+var findPeopleByName = function (personName, done) {
+	Person.find({ name: personName }, (err, data) => {
+		if (err) return done(err);
+		done(null, data);
+	});
 };
 
 /** 6) Use `Model.findOne()` */
@@ -141,30 +145,30 @@ var findPeopleByName = function(personName, done) {
 // using `Model.findOne() -> Person`. Use the function
 // argument `food` as search key
 
-var findOneByFood = function(food, done) {
-  Person.findOne({favoriteFoods: [food]}, (err,data) => {
-    if(err) return done(err)
-    done(null, data);
-  });
+var findOneByFood = function (food, done) {
+	Person.findOne({ favoriteFoods: [food] }, (err, data) => {
+		if (err) return done(err);
+		done(null, data);
+	});
 };
 
 /** 7) Use `Model.findById()` */
 
-// When saving a document, mongodb automatically add the field `_id`,
+// When saving a document, mongodb automatically adds the field `_id`,
 // and set it to a unique alphanumeric key. Searching by `_id` is an
 // extremely frequent operation, so `moongose` provides a dedicated
 // method for it. Find the (only!!) person having a certain Id,
 // using `Model.findById() -> Person`.
 // Use the function argument 'personId' as search key.
 
-var findPersonById = function(personId, done) {
-  Person.findById({'_id': personId}, (err,data) => {
-    if(err) return done(err)
-    done(null, data);
-  })
+const findPersonById = function (personId, done) {
+	Person.findById({ _id: personId }, (err, data) => {
+		if (err) return done(err);
+		done(null, data);
+	});
 };
 
-/** # CR[U]D part III - UPDATE # 
+/** # CR[U]D part III - UPDATE #
 /*  ============================ */
 
 /** 8) Classic Update : Find, Edit then Save */
@@ -189,16 +193,16 @@ var findPersonById = function(personId, done) {
 // manually mark it as edited using `document.markModified('edited-field')`
 // (http://mongoosejs.com/docs/schematypes.html - #Mixed )
 
-var findEditThenSave = function(personId, done) {
-  var foodToAdd = 'hamburger';
-  Person.findById(personId, (err, person) => {
-    if(err) return done(err)
-    person.favoriteFoods.push(foodToAdd);
-    person.save((err, person) => {
-      if(err) return done(err)
-      done(null, person);
-    });
-  });
+var findEditThenSave = function (personId, done) {
+	var foodToAdd = 'hamburger';
+	Person.findById(personId, (err, person) => {
+		if (err) return done(err);
+		person.favoriteFoods.push(foodToAdd);
+		person.save((err, person) => {
+			if (err) return done(err);
+			done(null, person);
+		});
+	});
 };
 
 /** 9) New Update : Use `findOneAndUpdate()` */
@@ -216,12 +220,17 @@ var findEditThenSave = function(personId, done) {
 // to `findOneAndUpdate()`. By default the method
 // passes the unmodified object to its callback.
 
-var findAndUpdate = function(personName, done) {
-  var ageToSet = 20;
-  Person.findOneAndUpdate({name: personName}, {age: ageToSet}, { new: true }, (err, person) => {
-    if(err) return done(err);
-    done(null, person);
-  }); 
+var findAndUpdate = function (personName, done) {
+	var ageToSet = 20;
+	Person.findOneAndUpdate(
+		{ name: personName },
+		{ age: ageToSet },
+		{ new: true },
+		(err, person) => {
+			if (err) return done(err);
+			done(null, person);
+		}
+	);
 };
 
 /** # CRU[D] part IV - DELETE #
@@ -234,11 +243,11 @@ var findAndUpdate = function(personName, done) {
 // previous update methods. They pass the removed document to the cb.
 // As usual, use the function argument `personId` as search key.
 
-var removeById = function(personId, done) {
-  Person.findByIdAndRemove(personId, (err, data) => {
-    if(err) return done(err)
-    done(null, data); 
-  })
+var removeById = function (personId, done) {
+	Person.findByIdAndRemove(personId, (err, data) => {
+		if (err) return done(err);
+		done(null, data);
+	});
 };
 
 /** 11) Delete many People */
@@ -251,15 +260,14 @@ var removeById = function(personId, done) {
 // containing the outcome of the operation, and the number of items affected.
 // Don't forget to pass it to the `done()` callback, since we use it in tests.
 
-var removeManyPeople = function(done) {
-  var nameToRemove = "Mary";
-  Person.remove({name: nameToRemove}, (err, data) => {
-  done(null, data); 
-  })
-  
+var removeManyPeople = function (done) {
+	var nameToRemove = 'Mary';
+	Person.remove({ name: nameToRemove }, (err, data) => {
+		done(null, data);
+	});
 };
 
-/** # C[R]UD part V -  More about Queries # 
+/** # C[R]UD part V -  More about Queries #
 /*  ======================================= */
 
 /** 12) Chain Query helpers */
@@ -277,13 +285,16 @@ var removeManyPeople = function(done) {
 // Chain `.find()`, `.sort()`, `.limit()`, `.select()`, and then `.exec()`,
 // passing the `done(err, data)` callback to it.
 
-var queryChain = function(done) {
-  var foodToSearch = "burrito";
-  Person.find({favoriteFoods: foodToSearch}).sort({name: 'asc'}).limit(2).select('-age').
-    exec((err, data) => {
-       if(err) throw err
-       done(null, data) 
-    });
+var queryChain = function (done) {
+	var foodToSearch = 'burrito';
+	Person.find({ favoriteFoods: foodToSearch })
+		.sort({ name: 'asc' })
+		.limit(2)
+		.select('-age')
+		.exec((err, data) => {
+			if (err) throw err;
+			done(null, data);
+		});
 };
 
 /** **Well Done !!**
@@ -298,7 +309,6 @@ var queryChain = function(done) {
 // * Validation,
 // * Schema Virtuals and  Model, Static, and Instance methods,
 // * and much more in the [mongoose docs](http://mongoosejs.com/docs/)
-
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
