@@ -2,7 +2,12 @@
 
 * 12 Exercises to learn mongoDB and Mongoose, part of FreeCodeCamp Front End Certification.
 
-**\* Note: to open web links in a new window use: _ctrl+click on link_**
+* **Note:** to open web links in a new window use: _ctrl+click on link_
+
+![GitHub repo size](https://img.shields.io/github/repo-size/AndrewJBateman/FCC-Mongoose---Mongodb?style=plastic)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/AndrewJBateman/FCC-Mongoose---Mongodb?style=plastic)
+![GitHub Repo stars](https://img.shields.io/github/stars/AndrewJBateman/FCC-Mongoose---Mongodb?style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/AndrewJBateman/FCC-Mongoose---Mongodb?style=plastic)
 
 ## :page_facing_up: Table of contents
 
@@ -16,6 +21,7 @@
 	* [:cool: Features](#cool-features)
 	* [:clipboard: Status & To-Do List](#clipboard-status--to-do-list)
 	* [:clap: Inspiration](#clap-inspiration)
+	* [:file_folder: License](#file_folder-license)
 	* [:envelope: Contact](#envelope-contact)
 
 ## :books: General info
@@ -71,6 +77,10 @@ const findPersonById = function (personId, done) {
 
 * [freeCodeCamp: Introduction to the MongoDB and Mongoose Challenges](https://www.freecodecamp.org/learn/apis-and-microservices/mongodb-and-mongoose/)
 
+## :file_folder: License
+
+* This project is licensed under the terms of the MIT license.
+
 ## :envelope: Contact
 
-* Repo created by [ABateman](https://www.andrewbateman.org) - you are welcome to [send me a message](https://andrewbateman.org/contact)
+* Repo created by [ABateman](https://github.com/AndrewJBateman), email: gomezbateman@yahoo.com
